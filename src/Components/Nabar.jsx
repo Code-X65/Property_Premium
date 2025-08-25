@@ -25,38 +25,38 @@ const searchRef = useRef(null);
   const dropdownRef = useRef(null);
 
   const service_1 = [
-    { name: "Buy", a: "/property_for_sale" },
-    { name: "Rent", a: "/rent-property" },
-    { name: "Estate Agent", a: "/Agents" }
+    { name: "Buy", a: "/Property_Premium/property_for_sale" },
+    { name: "Rent", a: "/Property_Premium/rent-property" },
+    { name: "Estate Agent", a: "/Property_Premium/Agents" }
   ];
 
   const service_2 = [
-    { name: "Shortlet", a: "/shortlet-property" },
-    { name: "Services", a: "/services" },
-    { name: "Blog", a: "/blogPage" }
+    { name: "Shortlet", a: "/Property_Premium/shortlet-property" },
+    { name: "Services", a: "/Property_Premium/services" },
+    { name: "Blog", a: "/Property_Premium/blogPage" }
   ];
 
   const service_1_dropdown = {
   "Buy": [
-    { name: "Houses for Sale", href: "/houses-for-sale", icon: "🏠" },
-    { name: "Apartments for Sale", href: "/apartments-for-sale", icon: "🏢" },
-    { name: "Commercial Properties", href: "/commercial-sale", icon: "🏪" },
-    { name: "Land for Sale", href: "/land-for-sale", icon: "🏞️" },
-    { name: "New Developments", href: "/new-developments", icon: "🏗️" }
+    { name: "Houses for Sale", href: "/Property_Premium/houses-for-sale", icon: "🏠" },
+    { name: "Apartments for Sale", href: "/Property_Premium/apartments-for-sale", icon: "🏢" },
+    { name: "Commercial Properties", href: "/Property_Premium/commercial-sale", icon: "🏪" },
+    { name: "Land for Sale", href: "/Property_Premium/land-for-sale", icon: "🏞️" },
+    { name: "New Developments", href: "/Property_Premium/new-developments", icon: "🏗️" }
   ],
   "Rent": [
-    { name: "Houses for Rent", href: "/houses-for-rent", icon: "🏡" },
-    { name: "Apartments for Rent", href: "/apartments-for-rent", icon: "🏢" },
-    { name: "Office Spaces", href: "/office-rent", icon: "🏢" },
-    { name: "Student Housing", href: "/student-housing", icon: "🎓" },
-    { name: "Furnished Rentals", href: "/furnished-rentals", icon: "🛏️" }
+    { name: "Houses for Rent", href: "/Property_Premium/houses-for-rent", icon: "🏡" },
+    { name: "Apartments for Rent", href: "/Property_Premium/apartments-for-rent", icon: "🏢" },
+    { name: "Office Spaces", href: "/Property_Premium/office-rent", icon: "🏢" },
+    { name: "Student Housing", href: "/Property_Premium/student-housing", icon: "🎓" },
+    { name: "Furnished Rentals", href: "/Property_Premium/furnished-rentals", icon: "🛏️" }
   ],
   "Estate Agent": [
-    { name: "Find an Agent", href: "/find-agent", icon: "👨‍💼" },
-    { name: "Agent Services", href: "/agent-services", icon: "🤝" },
-    { name: "Property Valuation", href: "/property-valuation", icon: "💰" },
-    { name: "Market Reports", href: "/market-reports", icon: "📊" },
-    { name: "Become an Agent", href: "/become-agent", icon: "💼" }
+    { name: "Find an Agent", href: "/Property_Premium/find-agent", icon: "👨‍💼" },
+    { name: "Agent Services", href: "/Property_Premium/agent-services", icon: "🤝" },
+    { name: "Property Valuation", href: "/Property_Premium/property-valuation", icon: "💰" },
+    { name: "Market Reports", href: "/Property_Premium/market-reports", icon: "📊" },
+    { name: "Become an Agent", href: "/Property_Premium/become-agent", icon: "💼" }
   ]
 };
 
@@ -64,12 +64,12 @@ const searchRef = useRef(null);
     {
       name: "Sign up",
       className: " font-medium text-[#306] rounded-md hover:bg-blue-700 hover:text-white transition-colors text-sm px-3 py-1",
-      a: "/signup"
+      a: "/Property_Premium/signup"
     },
     {
       name: "Log in",
       className: " font-medium text-[#306] rounded-md hover:bg-blue-700 hover:text-white transition-colors text-sm px-3 py-1",
-      a: "/login"
+      a: "/Property_Premium/login"
     }
   ];
 
@@ -78,26 +78,26 @@ const searchRef = useRef(null);
     {
       name: "Dashboard",
       icon: BarChart3,
-      href: "/dashboard",
+      href: "/Property_Premium/dashboard",
       description: "View your dashboard"
     },
     {
     name: "Wishlist",
     icon: Heart,
-    href: "/wishlist",
+    href: "/Property_Premium/wishlist",
     description: `${wishlistCount} saved properties`,
     badge: wishlistCount > 0 ? wishlistCount : null
   },
     {
       name: "Profile",
       icon: UserCircle,
-      href: "/profile",
+      href: "/Property_Premium/profile",
       description: "Manage your profile"
     },
     {
       name: "Settings",
       icon: Settings,
-      href: "/settings",
+      href: "/Property_Premium/settings",
       description: "Account settings"
     }
   ];
@@ -301,7 +301,7 @@ const handleLogout = async () => {
       setProfileDropdownOpen(false);
       
       // Redirect to home page
-      window.location.href = '/';
+      window.location.href = '/Property_Premium';
       // Alternative: use your router's navigation
       // navigate('/');
       
@@ -434,7 +434,7 @@ useEffect(() => {
           {/* Logo */}
           <div className="flex items-center">
             <Home className="h-7 w-7 text-blue-600" />
-            <a href="/" className="ml-2 text-xl font-bold text-gray-800">
+            <a href="/Property_Premium/" className="ml-2 text-xl font-bold text-gray-800">
              Property Premium
             </a>
           </div>

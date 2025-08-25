@@ -43,7 +43,7 @@ const ProtectedRoute = ({ children, isAuthenticated, isLoading }) => {
     return <LoadingSpinner />;
   }
   
-  return isAuthenticated ? children : <Navigate to="/login" replace />;
+  return isAuthenticated ? children : <Navigate to="/Property_Premium/login" replace />;
 };
 
 // Public Route component (redirect to dashboard if already logged in)
@@ -52,7 +52,7 @@ const PublicRoute = ({ children, isAuthenticated, isLoading }) => {
     return <LoadingSpinner />;
   }
   
-  return !isAuthenticated ? children : <Navigate to="/dashboard" replace />;
+  return !isAuthenticated ? children : <Navigate to="/Property_Premium/dashboard" replace />;
 };
 
 const App = () => {
@@ -109,7 +109,7 @@ const App = () => {
           
           {/* Public routes that redirect to dashboard if user is logged in */}
           <Route 
-            path='/signup' 
+            path='/Property_Premium/signup' 
             element={
               <PublicRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <Signup />
@@ -117,7 +117,7 @@ const App = () => {
             } 
           />
           <Route 
-            path='/login' 
+            path='/Property_Premium/login' 
             element={
               <PublicRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <LogIn />
@@ -127,22 +127,22 @@ const App = () => {
           
           {/* Protected routes */}
           <Route 
-            path='/dashboard/*' 
+            path='/Property_Premium/dashboard/*' 
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <Dashboard />
               </ProtectedRoute>
             } 
           />
-          <Route path='/post_a_listing' element={ <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
+          <Route path='/Property_Premium/post_a_listing' element={ <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <CreateListing />
               </ProtectedRoute>} />
-          <Route path='/wishlist' element={ <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
+          <Route path='/Property_Premium/wishlist' element={ <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <Wishlist />
               </ProtectedRoute>} />
           
           {/* Catch all route - redirect to home */}
-          <Route path='*' element={<Navigate to="/" replace />} />
+          <Route path='*' element={<Navigate to="/Property_Premium" replace />} />
         </Routes>
         <Footer />
       </Router>
