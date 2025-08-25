@@ -98,14 +98,14 @@ const App = () => {
         <Navbar />
         <Routes>
           {/* Public routes */}
-          <Route path='/' element={<Homepage />} />
-          <Route path='/property_for_sale' element={<PropertiesForSale />} />
-          <Route path='/newsletter_table' element={<NewsletterSubscribersTable />} />
-          <Route path='/Agents' element={<AgentsList />} />
-          <Route path="/property/:id" element={<PropertyDetails />} />
+          <Route path='/Property_Premium' element={<Homepage />} />
+          <Route path='/Property_Premium/property_for_sale' element={<PropertiesForSale />} />
+          <Route path='/Property_Premium/newsletter_table' element={<NewsletterSubscribersTable />} />
+          <Route path='/Property_Premium/Agents' element={<AgentsList />} />
+          <Route path="/Property_Premium/property/:id" element={<PropertyDetails />} />
           {/* <Route path="/user" element={<UserProfileView />} /> */}
-        <Route path="/profile/:userId" element={<UserProfileView />} />
-        <Route path="/search" element={<PropertySearch />} />
+        <Route path="/Property_Premium/profile/:userId" element={<UserProfileView />} />
+        <Route path="/Property_Premium/search" element={<PropertySearch />} />
           
           {/* Public routes that redirect to dashboard if user is logged in */}
           <Route 
