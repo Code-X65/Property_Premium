@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Navbar from './Components/Nabar'
 import Homepage from './Paages/Homepage'
 import Signup from './Components/SignUp'
@@ -94,22 +94,22 @@ const App = () => {
 
   return (
     <>
-      <Router>
+      <Router basename='/Property_premium'>
         <Navbar />
         <Routes>
           {/* Public routes */}
-          <Route path='/Property_Premium' element={<Homepage />} />
-          <Route path='/Property_Premium/property_for_sale' element={<PropertiesForSale />} />
-          <Route path='/Property_Premium/newsletter_table' element={<NewsletterSubscribersTable />} />
-          <Route path='/Property_Premium/Agents' element={<AgentsList />} />
-          <Route path="/Property_Premium/property/:id" element={<PropertyDetails />} />
+          <Route path='/' element={<Homepage />} />
+          <Route path='/property_for_sale' element={<PropertiesForSale />} />
+          <Route path='/newsletter_table' element={<NewsletterSubscribersTable />} />
+          <Route path='/Agents' element={<AgentsList />} />
+          <Route path="/property/:id" element={<PropertyDetails />} />
           {/* <Route path="/user" element={<UserProfileView />} /> */}
-        <Route path="/Property_Premium/profile/:userId" element={<UserProfileView />} />
-        <Route path="/Property_Premium/search" element={<PropertySearch />} />
+        <Route path="/profile/:userId" element={<UserProfileView />} />
+        <Route path="/search" element={<PropertySearch />} />
           
           {/* Public routes that redirect to dashboard if user is logged in */}
           <Route 
-            path='/Property_Premium/signup' 
+            path='/signup' 
             element={
               <PublicRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <Signup />
@@ -117,7 +117,7 @@ const App = () => {
             } 
           />
           <Route 
-            path='/Property_Premium/login' 
+            path='/login' 
             element={
               <PublicRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <LogIn />
@@ -127,22 +127,22 @@ const App = () => {
           
           {/* Protected routes */}
           <Route 
-            path='/Property_Premium/dashboard/*' 
+            path='/dashboard/*' 
             element={
               <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <Dashboard />
               </ProtectedRoute>
             } 
           />
-          <Route path='/Property_Premium/post_a_listing' element={ <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
+          <Route path='/post_a_listing' element={ <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <CreateListing />
               </ProtectedRoute>} />
-          <Route path='/Property_Premium/wishlist' element={ <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
+          <Route path='/wishlist' element={ <ProtectedRoute isAuthenticated={isAuthenticated} isLoading={isLoading}>
                 <Wishlist />
               </ProtectedRoute>} />
           
           {/* Catch all route - redirect to home */}
-          <Route path='*' element={<Navigate to="/Property_Premium" replace />} />
+          <Route path='*' element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
       </Router>
