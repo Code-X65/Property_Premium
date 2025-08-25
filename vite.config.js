@@ -7,5 +7,6 @@ export default defineConfig({
   plugins: [react(),
     tailwindcss(),
   ],
+  base: '/Property_Premium/',
   
 })
