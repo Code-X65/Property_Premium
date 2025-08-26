@@ -272,7 +272,7 @@ const RecommendedProperties = ({
         </div>
         
         <button 
-          onClick={() => navigate(`/property/${property.id}`)}
+          onClick={() => navigate(`/Property_Premium/property/${property.id}`)}
           className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors flex items-center justify-center gap-1 text-sm"
         >
           <Eye className="w-3 h-3" />
@@ -333,7 +333,7 @@ const RecommendedProperties = ({
       {properties.length === maxProperties && (
         <div className="text-center mt-6">
           <button
-            onClick={() => navigate('/properties')}
+            onClick={() => navigate('/Property_Premium/properties')}
             className="text-blue-600 hover:text-blue-700 font-medium"
           >
             View All Properties →

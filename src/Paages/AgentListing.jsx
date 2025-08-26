@@ -202,7 +202,7 @@ const loadMore = () => {
         
         <div className="flex-1">
           <h3 
-  onClick={() => navigate(`/profile/${agent.id}`)}
+  onClick={() => navigate(`Property_Premium/profile/${agent.id}`)}
   className="text-lg font-semibold text-gray-900 cursor-pointer hover:text-blue-600"
 >
   {agent.firstName} {agent.lastName}
@@ -269,7 +269,7 @@ const loadMore = () => {
           Contact Agent
         </button>
       <button 
-  onClick={() => navigate(`/profile/${agent.id}`)}
+  onClick={() => navigate(`/Property_Premium/profile/${agent.id}`)}
   className="px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors text-sm font-medium"
 >
   View Profile

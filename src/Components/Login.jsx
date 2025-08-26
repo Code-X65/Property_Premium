@@ -40,7 +40,7 @@ const LogIn = () => {
     const unsubscribe = subscribeToAuthChanges((user) => {
       if (user) {
         // User is already signed in, redirect to dashboard
-        window.location.href = '/dashboard';
+        window.location.href = '/Property_Premium/dashboard';
         localStorage.setItem('Status', 'Authenticated')
       }
     });
@@ -168,7 +168,7 @@ const LogIn = () => {
     
     // Redirect to dashboard after successful sign-in
     setTimeout(() => {
-      window.location.href = '/dashboard';
+      window.location.href = '/Property_Premium/dashboard';
     }, 1500);
     
     setLoading(false);
@@ -195,7 +195,7 @@ const LogIn = () => {
         </h2>
         <p className="mt-2 text-center text-sm text-gray-600">
           Or{' '}
-          <a href="/signup" className="font-medium text-blue-600 hover:text-blue-500">
+          <a href="/Property_Premium/signup" className="font-medium text-blue-600 hover:text-blue-500">
             create a new account
           </a>
         </p>
@@ -310,7 +310,7 @@ const LogIn = () => {
                 </div>
 
                 <div className="text-sm">
-                  <a href="/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
+                  <a href="/Property_Premium/forgot-password" className="font-medium text-blue-600 hover:text-blue-500">
                     Forgot your password?
                   </a>
                 </div>

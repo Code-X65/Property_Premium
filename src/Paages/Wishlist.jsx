@@ -5,24 +5,9 @@ import { useNavigate } from 'react-router-dom';
 import { getCurrentUser, subscribeToAuthChanges } from '../Firebase Auth/Firebase';
 
 
-// Mock Firebase functions for demonstration
-const mockGetFirestore = () => ({});
-const mockDoc = () => ({});
-const mockGetDoc = () => Promise.resolve({ exists: () => true, data: () => ({ wishlist: [] }) });
-const mockUpdateDoc = () => Promise.resolve();
-const mockArrayRemove = (id) => id;
-const mockGetDocs = () => Promise.resolve({ docs: [] });
-const mockCollection = () => ({});
-const mockQuery = () => ({});
-const mockWhere = () => ({});
-const mockDocumentId = () => ({});
+1
 
-// Mock auth functions
-const mockGetCurrentUser = () => ({ uid: 'user123', email: 'user@example.com' });
-const mockSubscribeToAuthChanges = (callback) => {
-  callback({ uid: 'user123', email: 'user@example.com', displayName: 'John Doe' });
-  return () => {};
-};
+
 const Wishlist = () => {
     const navigate = useNavigate();
 
@@ -287,12 +272,12 @@ useEffect(() => {
 
   // Navigate to property details (mock function)
  const navigateToProperty = (propertyId) => {
-  navigate(`/property/${propertyId}`);
+  navigate(`Property_Premium/property/${propertyId}`);
 };
 
   // Navigate to properties for sale page
 const navigateToPropertiesForSale = () => {
-  navigate('/properties-for-sale'); // or whatever your route is
+  navigate('/Property_Premium/properties-for-sale'); // or whatever your route is
 };
 
   // Format price function

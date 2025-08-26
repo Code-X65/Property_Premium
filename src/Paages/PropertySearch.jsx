@@ -519,10 +519,10 @@ querySnapshot.forEach((doc) => {
   onClick={() => {
     console.log('Navigating to property:', property.id);
     // Pass property data as state (optional)
-    navigate(`/property/${property.id}`, { 
+    navigate(`/Property_Premium/property/${property.id}`, { 
       state: { 
         property: property,
-        returnTo: '/property-search' 
+        returnTo: '/Property_Premium/property-search' 
       } 
     });
   }}
@@ -788,7 +788,7 @@ querySnapshot.forEach((doc) => {
         {user && (
           <div className="fixed bottom-6 right-6">
             <button 
-              onClick={() => navigate('/post_a_listing')}
+              onClick={() => navigate('/Property_Premium/post_a_listing')}
               className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
               title="Create New Listing"
             >

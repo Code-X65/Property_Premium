@@ -94,7 +94,7 @@ const App = () => {
 
   return (
     <>
-      <Router basename='/Property_premium'>
+      <Router basename='/Property_Premium'>
         <Navbar />
         <Routes>
           {/* Public routes */}

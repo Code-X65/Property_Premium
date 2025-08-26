@@ -55,7 +55,7 @@ import RecommendedProperties from './RecommendedProperties';
 const promptLogin = () => {
   if (confirm('Please log in to leave a review. Would you like to go to the login page?')) {
     // Navigate to login - adjust this based on your routing
-    navigate('/login', { state: { returnTo: `/property/${propertyId}` } });
+    navigate('/Property_Premium/login', { state: { returnTo: `/Property_Premium/property/${propertyId}` } });
   }
 };
 const PropertyDetails = () => {
@@ -920,7 +920,7 @@ const handleSendMessage = async () => {
             {/* Owner Profile Card */}
        <div className="bg-white rounded-lg p-4 sm:p-6 shadow-sm lg:sticky lg:top-24">
   <div className="text-center mb-6">
-    <div className="relative inline-block cursor-pointer" onClick={() => navigate(`/profile/${property.owner.id}`)}>
+    <div className="relative inline-block cursor-pointer" onClick={() => navigate(`/Property_Premium/profile/${property.owner.id}`)}>
       <img
         src={property.owner.profilePicture}
         alt={property.owner.name}
@@ -934,7 +934,7 @@ const handleSendMessage = async () => {
     </div>
   <h3 
   className="text-lg font-semibold text-gray-800 cursor-pointer hover:text-blue-600 transition-colors"
-  onClick={() => navigate(`/profile/${property.owner.id}`)}
+  onClick={() => navigate(`/Property_Premium/profile/${property.owner.id}`)}
 >
   {property.owner.name}
 </h3>
@@ -1035,7 +1035,7 @@ const handleSendMessage = async () => {
   onClick={() => {
     const ownerId = property?.owner?.id;
     if (ownerId) {
-      navigate(`/profile/${ownerId}`);
+      navigate(`/Property_Premium/profile/${ownerId}`);
     } else {
       alert('Owner information not available');
     }

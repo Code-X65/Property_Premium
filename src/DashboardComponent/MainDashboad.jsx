@@ -35,7 +35,7 @@ const MainDashboad = ({user}) => {
 
     {/* Action Cards */}
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-      <Link to='/post_a_listing'>
+      <Link to='/Property_Premium/post_a_listing'>
       
       <div className="bg-white rounded-lg border border-gray-200 p-6 text-center hover:shadow-md transition-shadow cursor-pointer">
         <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
@@ -44,7 +44,7 @@ const MainDashboad = ({user}) => {
         <h4 className="font-medium text-gray-800">Post a Listing</h4>
       </div>
       </Link>
-    <Link to='/dashboard/my-account'>
+    <Link to='/Property_Premium/dashboard/my-account'>
       <div className="bg-white rounded-lg border border-gray-200 p-6 text-center hover:shadow-md transition-shadow cursor-pointer">
         <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
           <User2 className="w-6 h-6 text-green-600" />
