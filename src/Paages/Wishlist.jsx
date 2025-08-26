@@ -297,7 +297,7 @@ const navigateToPropertiesForSale = () => {
       const matchesType = !filterType || property.propertyType === filterType;
       
       return matchesSearch && matchesType;
-    })
+    })  
     .sort((a, b) => {
       switch (sortBy) {
         case 'dateAdded':

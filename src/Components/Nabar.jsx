@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Home, Menu, X, LogOut, User, ChevronDown, Settings, BarChart3, UserCircle, DoorOpen, DoorOpenIcon, Heart, Search } from 'lucide-react';
 import { collection, query, where, orderBy, getDocs, getFirestore, onSnapshot, collectionGroup, limit, doc, getDoc } from 'firebase/firestore';
 import { signOutUser, subscribeToAuthChanges, getCurrentUser } from '../Firebase Auth/Firebase'; // Adjust path to your firebase config
-
+import { Link, Links } from 'react-router-dom';
 
 const Navbar = () => {
   const [profileData, setProfileData] = useState(null);
@@ -25,38 +25,38 @@ const searchRef = useRef(null);
   const dropdownRef = useRef(null);
 
   const service_1 = [
-    { name: "Buy", a: "/Property_Premium/property_for_sale" },
-    { name: "Rent", a: "/Property_Premium/rent-property" },
-    { name: "Estate Agent", a: "/Property_Premium/Agents" }
+    { name: "Buy", a: "/property_for_sale" },
+    { name: "Rent", a: "/rent-property" },
+    { name: "Estate Agent", a: "/Agents" }
   ];
 
   const service_2 = [
-    { name: "Shortlet", a: "/Property_Premium/shortlet-property" },
-    { name: "Services", a: "/Property_Premium/services" },
-    { name: "Blog", a: "/Property_Premium/blogPage" }
+    { name: "Shortlet", a: "/shortlet-property" },
+    { name: "Services", a: "/services" },
+    { name: "Blog", a: "/blogPage" }
   ];
 
   const service_1_dropdown = {
   "Buy": [
-    { name: "Houses for Sale", href: "/Property_Premium/houses-for-sale", icon: "🏠" },
-    { name: "Apartments for Sale", href: "/Property_Premium/apartments-for-sale", icon: "🏢" },
-    { name: "Commercial Properties", href: "/Property_Premium/commercial-sale", icon: "🏪" },
-    { name: "Land for Sale", href: "/Property_Premium/land-for-sale", icon: "🏞️" },
-    { name: "New Developments", href: "/Property_Premium/new-developments", icon: "🏗️" }
+    { name: "Houses for Sale", href: "/houses-for-sale", icon: "🏠" },
+    { name: "Apartments for Sale", href: "/apartments-for-sale", icon: "🏢" },
+    { name: "Commercial Properties", href: "/commercial-sale", icon: "🏪" },
+    { name: "Land for Sale", href: "/land-for-sale", icon: "🏞️" },
+    { name: "New Developments", href: "/new-developments", icon: "🏗️" }
   ],
   "Rent": [
-    { name: "Houses for Rent", href: "/Property_Premium/houses-for-rent", icon: "🏡" },
-    { name: "Apartments for Rent", href: "/Property_Premium/apartments-for-rent", icon: "🏢" },
-    { name: "Office Spaces", href: "/Property_Premium/office-rent", icon: "🏢" },
-    { name: "Student Housing", href: "/Property_Premium/student-housing", icon: "🎓" },
-    { name: "Furnished Rentals", href: "/Property_Premium/furnished-rentals", icon: "🛏️" }
+    { name: "Houses for Rent", href: "/houses-for-rent", icon: "🏡" },
+    { name: "Apartments for Rent", href: "/apartments-for-rent", icon: "🏢" },
+    { name: "Office Spaces", href: "/office-rent", icon: "🏢" },
+    { name: "Student Housing", href: "/student-housing", icon: "🎓" },
+    { name: "Furnished Rentals", href: "/furnished-rentals", icon: "🛏️" }
   ],
   "Estate Agent": [
-    { name: "Find an Agent", href: "/Property_Premium/find-agent", icon: "👨‍💼" },
-    { name: "Agent Services", href: "/Property_Premium/agent-services", icon: "🤝" },
-    { name: "Property Valuation", href: "/Property_Premium/property-valuation", icon: "💰" },
-    { name: "Market Reports", href: "/Property_Premium/market-reports", icon: "📊" },
-    { name: "Become an Agent", href: "/Property_Premium/become-agent", icon: "💼" }
+    { name: "Find an Agent", href: "/find-agent", icon: "👨‍💼" },
+    { name: "Agent Services", href: "/agent-services", icon: "🤝" },
+    { name: "Property Valuation", href: "/property-valuation", icon: "💰" },
+    { name: "Market Reports", href: "/market-reports", icon: "📊" },
+    { name: "Become an Agent", href: "/become-agent", icon: "💼" }
   ]
 };
 
@@ -64,12 +64,12 @@ const searchRef = useRef(null);
     {
       name: "Sign up",
       className: " font-medium text-[#306] rounded-md hover:bg-blue-700 hover:text-white transition-colors text-sm px-3 py-1",
-      a: "/Property_Premium/signup"
+      a: "/signup"
     },
     {
       name: "Log in",
       className: " font-medium text-[#306] rounded-md hover:bg-blue-700 hover:text-white transition-colors text-sm px-3 py-1",
-      a: "/Property_Premium/login"
+      a: "/login"
     }
   ];
 
@@ -78,26 +78,26 @@ const searchRef = useRef(null);
     {
       name: "Dashboard",
       icon: BarChart3,
-      href: "/Property_Premium/dashboard",
+      href: "/dashboard",
       description: "View your dashboard"
     },
     {
     name: "Wishlist",
     icon: Heart,
-    href: "/Property_Premium/wishlist",
+    href: "/wishlist",
     description: `${wishlistCount} saved properties`,
     badge: wishlistCount > 0 ? wishlistCount : null
   },
     {
       name: "Profile",
       icon: UserCircle,
-      href: "/Property_Premium/profile",
+      href: "/profile",
       description: "Manage your profile"
     },
     {
       name: "Settings",
       icon: Settings,
-      href: "/Property_Premium/settings",
+      href: "/settings",
       description: "Account settings"
     }
   ];
@@ -224,7 +224,7 @@ const handleSearch = (e) => {
   e.preventDefault();
   if (searchQuery.trim()) {
     // Navigate to search results page with query
-    window.location.href = `/Property_Premium/search?q=${encodeURIComponent(searchQuery.trim())}`;
+    window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
     // Or use your router: navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
   }
 };
@@ -255,7 +255,7 @@ const handleSearchKeyDown = (e) => {
       setShowSuggestions(false);
       setSelectedSuggestionIndex(-1);
       // Navigate with selected suggestion
-      window.location.href = `/Property_Premium/search?q=${encodeURIComponent(searchSuggestions[selectedSuggestionIndex])}`;
+      window.location.href = `/search?q=${encodeURIComponent(searchSuggestions[selectedSuggestionIndex])}`;
     } else if (searchQuery.trim()) {
       handleSearch(e);
     }
@@ -268,7 +268,7 @@ const handleSuggestionClick = (suggestion) => {
   setSearchQuery(suggestion);
   setShowSuggestions(false);
   setSelectedSuggestionIndex(-1);
-  window.location.href = `/Property_Premium/search?q=${encodeURIComponent(suggestion)}`;
+  window.location.href = `/search?q=${encodeURIComponent(suggestion)}`;
 };
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -434,9 +434,9 @@ useEffect(() => {
           {/* Logo */}
           <div className="flex items-center">
             <Home className="h-7 w-7 text-blue-600" />
-            <a href="/Property_Premium/" className="ml-2 text-xl font-bold text-gray-800">
+            <Link to="/" className="ml-2 text-xl font-bold text-gray-800">
              Property Premium
-            </a>
+            </Link>
           </div>
 
           {/* Desktop Menu */}
@@ -460,15 +460,15 @@ useEffect(() => {
         setDropdownTimeout(timeout);
       }}
     >
-      <a 
-        href={item.a} 
+      <Link 
+        to={item.a} 
         className="relative text-sm font-medium text-gray-700 hover:text-blue-600 transition-all duration-300 group py-2 flex items-center"
       >
         <span className="relative z-10">{item.name}</span>
         <ChevronDown className={`ml-1 h-3 w-3 transition-transform duration-200 ${hoveredService === item.name ? 'rotate-180' : ''}`} />
         <div className="absolute inset-0 bg-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-200 origin-center"></div>
         <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></div>
-      </a>
+      </Link>
       
       {/* Dropdown Menu */}
       {hoveredService === item.name && service_1_dropdown[item.name] && (
@@ -495,9 +495,9 @@ useEffect(() => {
           </div>
           <div className="py-2">
             {service_1_dropdown[item.name].map((dropdownItem, idx) => (
-              <a
+              <Link
                 key={idx}
-                href={dropdownItem.href}
+                to={dropdownItem.href}
                 className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 hover:translate-x-1 group"
                 onClick={() => setHoveredService(null)}
               >
@@ -512,14 +512,14 @@ useEffect(() => {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </div>
-              </a>
+              </Link>
             ))}
           </div>
           
           {/* View All Link */}
           <div className="border-t border-gray-100 pt-2">
-            <a
-              href={item.a}
+            <Link
+              to={item.a}
               className="flex items-center justify-center gap-2 px-4 py-2 text-sm font-medium text-blue-600 hover:bg-blue-50 transition-all duration-200 rounded-lg mx-2"
               onClick={() => setHoveredService(null)}
             >
@@ -527,7 +527,7 @@ useEffect(() => {
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
               </svg>
-            </a>
+            </Link>
           </div>
         </div>
       )}
@@ -537,15 +537,15 @@ useEffect(() => {
   <span className="text-gray-300 mx-2">|</span>
   
   {service_2.map((item, index) => (
-    <a 
+    <Link 
       key={index} 
-      href={item.a} 
+      to={item.a} 
       className="relative text-sm font-medium text-gray-700 hover:text-blue-600 transition-all duration-300 group py-2"
     >
       <span className="relative z-10">{item.name}</span>
       <div className="absolute inset-0 bg-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-200 origin-center"></div>
       <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></div>
-    </a>
+    </Link>
   ))}
 
      {/* Search Box - Desktop */}
@@ -632,14 +632,14 @@ useEffect(() => {
           {/* Login/Signup Buttons - Show when NOT authenticated */}
        <div className={`hidden md:flex items-center gap-3 ${isAuthenticated ? 'md:hidden' : ''}`}>
   {navButtons.map((btn, idx) => (
-    <a 
+    <Link 
       key={idx} 
-      href={btn.a} 
+      to={btn.a} 
       className="relative overflow-hidden px-4 py-2 font-medium text-sm rounded-md border-1 border-blue-600 text-blue-600 hover:text-white transition-all duration-300 group"
     >
       <span className="relative z-10">{btn.name}</span>
       <div className="absolute inset-0 bg-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-    </a>
+    </Link>
   ))}
 </div>
           {/* User Profile Dropdown - Show when authenticated */}
@@ -693,9 +693,9 @@ useEffect(() => {
     {/* Menu Items */}
     <div className="py-2">
       {profileMenuItems.map((item, index) => (
-        <a
+        <Link
           key={index}
-          href={item.href}
+          to={item.href}
           className="flex items-center gap-4 px-6 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 hover:translate-x-1 group"
           onClick={() => setProfileDropdownOpen(false)}
         >
@@ -711,7 +711,7 @@ useEffect(() => {
               {item.badge}
             </span>
           )}
-        </a>
+        </Link>
       ))}
     </div>
 
@@ -781,15 +781,15 @@ useEffect(() => {
               {/* Mobile Profile Menu Items */}
               <div className="space-y-2">
                 {profileMenuItems.map((item, index) => (
-                  <a
+                  <Link
                     key={index}
-                    href={item.href}
+                    to={item.href}
                     className="flex items-center gap-3 text-sm text-gray-700 hover:text-blue-700 transition-colors duration-200 py-1"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <item.icon className="h-4 w-4 text-gray-500" />
                     {item.name}
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -820,7 +820,7 @@ useEffect(() => {
 
           {/* Navigation Links */}
        {allServices.map((item, i) => (
-  <a
+  <Link
     key={i}
     href={item.a}
     className="block text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:translate-x-2 transition-all duration-300 py-3 px-2 rounded-lg font-medium"
@@ -830,21 +830,21 @@ useEffect(() => {
       <span className="w-2 h-2 bg-blue-600 rounded-full mr-3 opacity-0 hover:opacity-100 transition-opacity duration-200"></span>
       {item.name}
     </span>
-  </a>
+  </Link>
 ))}
           
           <hr className="border-gray-100" />
           
           {/* Mobile - Show login/signup when not authenticated */}
         {!isAuthenticated && navButtons.map((btn, idx) => (
-  <a
+  <Link
     key={idx}
-    href={btn.a}
+    to={btn.a}
     className="block text-sm font-semibold text-blue-600 hover:text-white hover:bg-blue-600 border-2 border-blue-600 rounded-lg py-2 px-4 text-center transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg"
     onClick={() => setMobileMenuOpen(false)}
   >
     {btn.name}
-  </a>
+  </Link>
 ))}
           
           {/* Mobile - Show logout when authenticated */}
