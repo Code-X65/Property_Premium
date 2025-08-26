@@ -483,7 +483,7 @@ const toggleWishlist = async (propertyId) => {
       </p>
       
   <button 
-    onClick={() => navigate(`/Property_Premium/property/${property.id}`)}
+    onClick={() => navigate(`/property/${property.id}`)}
     className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors flex items-center justify-center gap-2"
 >
     <Eye className="w-4 h-4" />
@@ -749,7 +749,7 @@ return (
       {user && (
         <div className="fixed bottom-6 right-6">
           <button 
-            onClick={() => window.location.href = '/Property_Premium/post_a_listing'}
+            onClick={() => window.location.href = '/post_a_listing'}
             className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
             title="Create New Listing"
           >

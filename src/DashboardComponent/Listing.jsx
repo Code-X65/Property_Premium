@@ -328,7 +328,7 @@ const handleCreateListing = () => {
 const handleEditProperty = (property) => {
     // Navigate to edit page with property data
     // You can use React Router or your preferred navigation method
-    window.location.href = `/Property_Premium/post_a_listing?edit=${property.id}`;
+    window.location.href = `/post_a_listing?edit=${property.id}`;
     // OR if using React Router:
     // navigate(`/post_a_listing?edit=${property.id}`, { state: { property } });
 };
@@ -676,7 +676,7 @@ const handlePreviewProperty = (property) => {
             <p className="text-gray-500 text-sm mb-4">
                 Create your first listing to get started.
             </p>
-           <Link to="/Property_Premium/post_a_listing"><button 
+           <Link to="/post_a_listing"><button 
                 className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
             >
                 Create Listing
@@ -698,7 +698,7 @@ const handlePreviewProperty = (property) => {
                 >
                     Show all listings
                 </button>
-            <Link to="/Property_Premium/post_a_listing">
+            <Link to="/post_a_listing">
                <button 
                  
                     className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"

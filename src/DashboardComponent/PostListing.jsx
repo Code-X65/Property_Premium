@@ -14,7 +14,7 @@ const PostListing = () => {
       </div>
       <h3 className="text-2xl font-semibold text-gray-800 mb-4">Create New Listing</h3>
       <p className="text-gray-600 mb-6">Start posting your property to reach potential buyers and renters.</p>
-    <a href="/Property_Premium/post_a_listing">  <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">
+    <a href="/post_a_listing">  <button className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition-colors">
         Start Creating Listing
       </button></a>
     </div>

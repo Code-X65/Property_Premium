@@ -56,7 +56,7 @@ const DashboardRoute = ({user}) => (
     {/* Action Cards */}
 
     <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-    <a href='/Property_Premium/post_a_listing'>
+    <a href='/post_a_listing'>
       <div className="bg-white rounded-lg border border-gray-200 p-6 text-center hover:shadow-md transition-shadow cursor-pointer">
         <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
           <Plus className="w-6 h-6 text-green-600" />
@@ -91,7 +91,7 @@ const DashboardRoute = ({user}) => (
       <div className="text-center py-8">
         <p className="text-gray-600">
           You do not have any recent listing. 
-        <Link to='/Property_Premium/post_a_listing'>  <button className="text-blue-600 hover:underline ml-1">
+        <Link to='/post_a_listing'>  <button className="text-blue-600 hover:underline ml-1">
             Click here to Post a Listing
           </button></Link>
         </p>
@@ -291,7 +291,7 @@ export default function Dashboard({
   const location = useLocation();
 
   // Get current route from URL
-  const currentRoute = location.pathname.replace('/Property_Premium/dashboard/', '') || 'overview';
+  const currentRoute = location.pathname.replace('/dashboard/', '') || 'overview';
 
   // These functions are now inside the component
   const handlePreviewProperty = (property) => {
@@ -375,7 +375,7 @@ export default function Dashboard({
   const currentRouteData = routes[currentRoute] || routes['overview'];
 
   const navigateToRoute = (routeId) => {
-    navigate(`/Property_Premium/dashboard/${routeId}`);
+    navigate(`/dashboard/${routeId}`);
     // Auto-close sidebar on mobile after navigation
     if (window.innerWidth < 768) {
       setSidebarOpen(false);

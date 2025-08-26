@@ -277,7 +277,7 @@ useEffect(() => {
 
   // Navigate to properties for sale page
 const navigateToPropertiesForSale = () => {
-  navigate('/Property_Premium/properties-for-sale'); // or whatever your route is
+  navigate('/properties-for-sale'); // or whatever your route is
 };
 
   // Format price function
