@@ -26,8 +26,8 @@ const searchRef = useRef(null);
 
   const service_1 = [
     { name: "Buy", a: "/property_for_sale" },
-    { name: "Rent", a: "/rent-property" },
-    { name: "Shortlet", a: "/shortlet-property" },
+    { name: "Rent", a: "/property_for_rent" },
+    { name: "Shortlet", a: "/property_for_shortlet" },
     { name: "Estate Agent", a: "/Agents" },
 
   ];

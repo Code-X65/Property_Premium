@@ -17,6 +17,8 @@ import Footer from './Components/Footer'
 import NewsletterSubscribersTable from './Components/NewslettersubcribersTable'
 import AgentsList from './Paages/AgentListing'
 import PropertySearch from './Paages/PropertySearch'
+import PropertiesForRent from './Paages/PropertyForRent'
+import PropertiesForShortlet from './Paages/PropertyForShortlet'
 
 // Loading spinner component
 const LoadingSpinner = () => (
@@ -100,6 +102,8 @@ const App = () => {
           {/* Public routes */}
           <Route path='/' element={<Homepage />} />
           <Route path='/property_for_sale' element={<PropertiesForSale />} />
+          <Route path='/property_for_rent' element={<PropertiesForRent />} />
+          <Route path='/property_for_shortlet' element={<PropertiesForShortlet />} />
           <Route path='/newsletter_table' element={<NewsletterSubscribersTable />} />
           <Route path='/Agents' element={<AgentsList />} />
           <Route path="/property/:id" element={<PropertyDetails />} />
