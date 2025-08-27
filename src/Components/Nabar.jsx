@@ -224,7 +224,7 @@ const handleSearch = (e) => {
   e.preventDefault();
   if (searchQuery.trim()) {
     // Navigate to search results page with query
-    window.location.href = `/search?q=${encodeURIComponent(searchQuery.trim())}`;
+    window.location.href = `/Property_Premium/search?q=${encodeURIComponent(searchQuery.trim())}`;
     // Or use your router: navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
   }
 };
@@ -255,7 +255,7 @@ const handleSearchKeyDown = (e) => {
       setShowSuggestions(false);
       setSelectedSuggestionIndex(-1);
       // Navigate with selected suggestion
-      window.location.href = `/search?q=${encodeURIComponent(searchSuggestions[selectedSuggestionIndex])}`;
+      window.location.href = `/Property_Premium/search?q=${encodeURIComponent(searchSuggestions[selectedSuggestionIndex])}`;
     } else if (searchQuery.trim()) {
       handleSearch(e);
     }
@@ -268,7 +268,7 @@ const handleSuggestionClick = (suggestion) => {
   setSearchQuery(suggestion);
   setShowSuggestions(false);
   setSelectedSuggestionIndex(-1);
-  window.location.href = `/search?q=${encodeURIComponent(suggestion)}`;
+  window.location.href = `/Property_Premium/search?q=${encodeURIComponent(suggestion)}`;
 };
 const useDebounce = (value, delay) => {
   const [debouncedValue, setDebouncedValue] = useState(value);
@@ -301,7 +301,7 @@ const handleLogout = async () => {
       setProfileDropdownOpen(false);
       
       // Redirect to home page
-      window.location.href = '/';
+      window.location.href = '/Property_Premium';
       // Alternative: use your router's navigation
       // navigate('/');
       

@@ -328,18 +328,12 @@ const handleCreateListing = () => {
 const handleEditProperty = (property) => {
     // Navigate to edit page with property data
     // You can use React Router or your preferred navigation method
-    window.location.href = `/post_a_listing?edit=${property.id}`;
+    window.location.href = `/Property_Premium/post_a_listing?edit=${property.id}`;
     // OR if using React Router:
     // navigate(`/post_a_listing?edit=${property.id}`, { state: { property } });
 };
 
-const handlePreviewProperty = (property) => {
-    // Add your preview property logic here
-    console.log('Previewing property:', property);
-    // Example: Navigate to preview page or open preview modal
-    // window.location.href = `/preview-property/${property.id}`;
-    // or set state to show preview, etc.
-};
+
 
       
         const PropertyCard = ({ property }) => {
@@ -616,7 +610,7 @@ const handlePreviewProperty = (property) => {
                             </p>
                         </div>
                         
-                        <Link to="/Proprty_Premium/post_a_listing">
+                        <Link to="/post_a_listing">
                         <button 
                        
                             className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors flex items-center gap-2"

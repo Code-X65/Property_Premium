@@ -749,7 +749,7 @@ return (
       {user && (
         <div className="fixed bottom-6 right-6">
           <button 
-            onClick={() => window.location.href = '/post_a_listing'}
+            onClick={() => window.location.href = '/Property_Premium/post_a_listing'}
             className="bg-blue-600 hover:bg-blue-700 text-white p-4 rounded-full shadow-lg transition-all duration-300 hover:scale-110"
             title="Create New Listing"
           >

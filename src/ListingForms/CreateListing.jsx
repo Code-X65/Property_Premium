@@ -567,7 +567,7 @@ const handleSubmit = async () => {
         // Optionally show a button to go to profile management
         setTimeout(() => {
             if (window.confirm('Would you like to go to Profile Management to complete validation?')) {
-                window.location.href = '/dashboard/my-account'; // Adjust path as needed
+                window.location.href = '/Property_Premium/dashboard/my-account'; // Adjust path as needed
             }
         }, 2000);
         
@@ -692,7 +692,7 @@ const handleSubmit = async () => {
             toast.success('Property updated successfully! 🎉');
             
             setTimeout(() => {
-                window.location.href = '/dashboard/my-listings';
+                window.location.href = '/Property_Premium/dashboard/my-listings';
             }, 2000);
         } else {
             const userPropertiesCollection = collection(db, 'users', user.uid, 'properties');
@@ -704,7 +704,7 @@ const handleSubmit = async () => {
             toast.success('Property listing created successfully! 🎉');
             
             setTimeout(() => {
-                window.location.href = '/dashboard/my-listings';
+                window.location.href = '/Property_Premium/dashboard/my-listings';
             }, 1500);
         }
 
@@ -777,7 +777,7 @@ const ProfileValidationBanner = ({ user, onCheckValidation }) => {
                         </p>
                         <div className="mt-3">
                             <button
-                                onClick={() => window.location.href = '/dashboard/my-account'}
+                                onClick={() => window.location.href = '/Property_Premium/dashboard/my-account'}
                                 className="bg-red-100 text-red-800 px-3 py-2 rounded-md text-sm font-medium hover:bg-red-200 transition-colors"
                             >
                                 Complete Profile Validation

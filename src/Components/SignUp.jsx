@@ -135,7 +135,7 @@ const Signup = () => {
       
       // Redirect to dashboard after 1.5 seconds
       setTimeout(() => {
-        window.location.href = '/dashboard';
+        window.location.href = '/Property_Premium/dashboard';
         localStorage.setItem('Status', 'Authenticated')
       }, 1500);
       
@@ -183,7 +183,7 @@ const Signup = () => {
     
     // Redirect to dashboard after successful Google sign-in
     setTimeout(() => {
-      window.location.href = '/dashboard';
+      window.location.href = '/Property_Premium/dashboard';
     }, 1500);
     
     setLoading(false);

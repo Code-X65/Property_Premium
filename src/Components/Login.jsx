@@ -40,7 +40,7 @@ const LogIn = () => {
     const unsubscribe = subscribeToAuthChanges((user) => {
       if (user) {
         // User is already signed in, redirect to dashboard
-        window.location.href = '/dashboard';
+        window.location.href = '/Property_Premium/dashboard';
         localStorage.setItem('Status', 'Authenticated')
       }
     });
@@ -168,7 +168,7 @@ const LogIn = () => {
     
     // Redirect to dashboard after successful sign-in
     setTimeout(() => {
-      window.location.href = '/dashboard';
+      window.location.href = '/Property_Premium/dashboard';
     }, 1500);
     
     setLoading(false);
