@@ -194,29 +194,10 @@ const FeaturedListings = () => {
 
         {/* Carousel Container */}
         <div className="relative">
-          {/* Navigation Buttons */}
-          {/* <button 
-            onClick={prevSlide}
-            className={`absolute left-4 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-all duration-300 hover:scale-110 ${
-              isVisible ? 'translate-x-0 opacity-100' : '-translate-x-10 opacity-0'
-            }`}
-            style={{ transitionDelay: '0.3s' }}
-          >
-            <ChevronLeft className="w-6 h-6 text-gray-700" />
-          </button>
-          
-          <button 
-            onClick={nextSlide}
-            className={`absolute right-4 top-1/2 -translate-y-1/2 z-10 bg-white shadow-lg rounded-full p-3 hover:bg-gray-50 transition-all duration-300 hover:scale-110 ${
-              isVisible ? 'translate-x-0 opacity-100' : 'translate-x-10 opacity-0'
-            }`}
-            style={{ transitionDelay: '0.3s' }}
-          >
-            <ChevronRight className="w-6 h-6 text-gray-700" />
-          </button> */}
-
+       
+       
           {/* Property Cards */}
-          <div className="grid md:grid-cols-2 gap-8 px-16">
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 gap-8 px-16">
             {getCurrentSlideProperties().map((property, index) => {
               const BadgeIcon = property.badgeIcon;
               return (

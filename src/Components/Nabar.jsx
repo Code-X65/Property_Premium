@@ -27,12 +27,14 @@ const searchRef = useRef(null);
   const service_1 = [
     { name: "Buy", a: "/property_for_sale" },
     { name: "Rent", a: "/rent-property" },
-    { name: "Estate Agent", a: "/Agents" }
+    { name: "Shortlet", a: "/shortlet-property" },
+    { name: "Estate Agent", a: "/Agents" },
+
   ];
 
   const service_2 = [
-    { name: "Shortlet", a: "/shortlet-property" },
     { name: "Services", a: "/services" },
+    { name: "About", a: "/about" },
     { name: "Blog", a: "/blogPage" }
   ];
 
@@ -91,13 +93,13 @@ const searchRef = useRef(null);
     {
       name: "Profile",
       icon: UserCircle,
-      href: "/profile",
+      href: "dashboard/my-account",
       description: "Manage your profile"
     },
     {
       name: "Settings",
       icon: Settings,
-      href: "/settings",
+      href: "dashboard/Setting",
       description: "Account settings"
     }
   ];
@@ -301,7 +303,7 @@ const handleLogout = async () => {
       setProfileDropdownOpen(false);
       
       // Redirect to home page
-      window.location.href = '/Property_Premium';
+      window.location.href = '/';
       // Alternative: use your router's navigation
       // navigate('/');
       
@@ -498,7 +500,7 @@ useEffect(() => {
               <Link
                 key={idx}
                 to={dropdownItem.href}
-                className="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 hover:translate-x-1 group"
+                className="flex items-center gap-1 px-4 py-3 text-sm text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 transition-all duration-200 hover:translate-x-1 group"
                 onClick={() => setHoveredService(null)}
               >
                 <span className="text-lg">{dropdownItem.icon}</span>
@@ -630,7 +632,7 @@ useEffect(() => {
 </div>
 
           {/* Login/Signup Buttons - Show when NOT authenticated */}
-       <div className={`hidden md:flex items-center gap-3 ${isAuthenticated ? 'md:hidden' : ''}`}>
+       <div className={`hidden md:flex items-center gap-2 ${isAuthenticated ? 'md:hidden' : ''}`}>
   {navButtons.map((btn, idx) => (
     <Link 
       key={idx} 
@@ -669,7 +671,7 @@ useEffect(() => {
   <div className="absolute right-0 top-full mt-3 w-72 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 z-50 transform animate-in slide-in-from-top-2 duration-200">
     {/* User Info Header */}
     <div className="px-6 py-4 border-b border-gray-100 bg-gradient-to-r from-blue-50 to-purple-50 rounded-t-2xl">
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-2">
         {profileData?.profileImage || user?.photoURL ? (
           <img 
             src={profileData?.profileImage || user.photoURL} 
@@ -758,7 +760,7 @@ useEffect(() => {
           {/* Mobile User Info - Show when authenticated */}
           {isAuthenticated && (
             <div className="py-3 border-b border-gray-100">
-              <div className="flex items-center gap-3 mb-3">
+              <div className="flex items-center gap-2 mb-3">
                {profileData?.profileImage || user?.photoURL ? (
   <img 
     src={profileData?.profileImage || user.photoURL} 
@@ -822,7 +824,7 @@ useEffect(() => {
        {allServices.map((item, i) => (
   <Link
     key={i}
-    href={item.a}
+    to={item.a}
     className="block text-sm text-gray-700 hover:text-blue-600 hover:bg-blue-50 hover:translate-x-2 transition-all duration-300 py-3 px-2 rounded-lg font-medium"
     onClick={() => setMobileMenuOpen(false)}
   >

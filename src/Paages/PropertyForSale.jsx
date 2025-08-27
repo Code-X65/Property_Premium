@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { ChevronDown, Filter, MapPin, Bed, Bath, Square, Eye, Heart, Search, X, Loader2, Home } from 'lucide-react';
+import { ChevronDown, Filter, MapPin, Bed, Bath, Square, Eye, Heart, Search, X, Loader2, Home, Grid, List, Share2 } from 'lucide-react';
 import { collection, query, where, orderBy, getDocs, getFirestore, onSnapshot, collectionGroup } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { getCurrentUser, subscribeToAuthChanges } from '../Firebase Auth/Firebase';
 import { doc, updateDoc, arrayUnion, arrayRemove, getDoc } from 'firebase/firestore';
 
 const PropertiesForSale = () => {
+  
   const [wishlist, setWishlist] = useState([]);
   const [properties, setProperties] = useState([]);
   const [filteredProperties, setFilteredProperties] = useState([]);
@@ -31,6 +32,33 @@ const fetchUserWishlist = async (userId) => {
     }
   } catch (error) {
     console.error('Error fetching wishlist:', error);
+  }
+};
+const shareProperty = async (property) => {
+  const shareData = {
+    title: property.title,
+    text: `Check out this property: ${property.title} in ${property.city}, ${property.state}`,
+    url: `${window.location.origin}/property/${property.id}`
+  };
+
+  try {
+    if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+      await navigator.share(shareData);
+    } else {
+      // Fallback: copy to clipboard
+      await navigator.clipboard.writeText(shareData.url);
+      alert('Property link copied to clipboard!');
+    }
+  } catch (error) {
+    console.error('Error sharing:', error);
+    // Fallback: copy to clipboard
+    try {
+      await navigator.clipboard.writeText(shareData.url);
+      alert('Property link copied to clipboard!');
+    } catch (clipboardError) {
+      console.error('Clipboard error:', clipboardError);
+      alert('Unable to share. Please copy the URL manually.');
+    }
   }
 };
 const shuffleArray = (array) => {
@@ -59,8 +87,9 @@ const totalPages = Math.ceil(filteredProperties.length / propertiesPerPage);
     city: ''
   });
 
-  const [sortBy, setSortBy] = useState('newest');
+  const [sortBy, setSortBy] = useState('shuffle');
   const [isShuffled, setIsShuffled] = useState(false);
+  const [viewMode, setViewMode] = useState('grid');
   useEffect(() => {
   setCurrentPage(1);
 }, [filters, sortBy]);
@@ -143,9 +172,9 @@ useEffect(() => {
       // Sort in JavaScript if we couldn't sort in Firestore
       propertiesData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
       const shuffledProperties = shuffleArray(propertiesData);
-
-      setProperties(shuffledProperties);
+setProperties(shuffledProperties);
 setFilteredProperties(shuffledProperties);
+setIsShuffled(true); // Mark as shuffled
 
       setError('');
     } catch (error) {
@@ -212,11 +241,11 @@ setFilteredProperties(shuffledProperties);
         });
 
         // Sort in JavaScript since we can't use orderBy with collectionGroup and where clauses
-allProperties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-const shuffledProperties = shuffleArray(allProperties);
-
-       setProperties(shuffledProperties);
+propertiesData.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+const shuffledProperties = shuffleArray(propertiesData);
+setProperties(shuffledProperties);
 setFilteredProperties(shuffledProperties);
+setIsShuffled(true);
         setError('');
       } catch (error) {
         console.error('Collection group query failed:', error);
@@ -264,8 +293,10 @@ setFilteredProperties(shuffledProperties);
       }
 
       allProperties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setProperties(allProperties);
-      setFilteredProperties(allProperties);
+const shuffledProperties = shuffleArray(allProperties);
+setProperties(shuffledProperties);
+setFilteredProperties(shuffledProperties);
+setIsShuffled(true);
     } catch (error) {
       throw error;
     }
@@ -324,14 +355,16 @@ const getPriceDisplay = (property) => {
              matchesBedrooms && matchesBathrooms && matchesCountry && matchesState && matchesCity;
     });
 
-    // Sort properties
-    // Sort properties
-if (sortBy === 'shuffle' || isShuffled) {
-  filtered = shuffleArray(filtered);
-  setIsShuffled(true);
+// Sort properties
+if (sortBy === 'shuffle') {
+  if (!isShuffled) {
+    filtered = shuffleArray(filtered);
+    setIsShuffled(true);
+  }
+  // If already shuffled and sortBy is still shuffle, keep the current order
 } else {
   setIsShuffled(false);
-  switch (sortBy) {
+   switch (sortBy) {
     case 'newest':
       filtered.sort((a, b) => {
         const aDate = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(a.createdAt);
@@ -412,8 +445,107 @@ const toggleWishlist = async (propertyId) => {
 
 
 
- const PropertyCard = ({ property }) => (
-  <div className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
+const PropertyCard = ({ property, viewMode = 'grid' }) => {
+  if (viewMode === 'list') {
+    return (
+      <div className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300 flex">
+      <div className="relative w-32 sm:w-48 md:w-64 h-full flex-shrink-0">
+        <img 
+          src={property.images?.[0] || 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop'} 
+          alt={property.title}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute top-1 sm:top-2 md:top-3 left-1 sm:left-2 md:left-3">
+          <span className="bg-blue-500 text-white px-1 sm:px-2 py-0.5 sm:py-1 rounded text-xs font-medium">
+            {property.propertyType}
+          </span>
+        </div>
+        <div className="absolute top-1 sm:top-2 md:top-3 right-1 sm:right-2 md:right-3">
+          <div className="flex gap-1 sm:gap-2">
+            <button
+              onClick={() => shareProperty(property)}
+              className="p-1 sm:p-1.5 md:p-2 rounded-full bg-white text-gray-600 hover:bg-gray-100 transition-colors"
+              title="Share property"
+            >
+              <Share2 className="w-3 sm:w-3.5 md:w-4 h-3 sm:h-3.5 md:h-4" />
+            </button>
+            <button
+              onClick={() => toggleWishlist(property.id)}
+              className={`p-1 sm:p-1.5 md:p-2 rounded-full transition-colors ${
+                wishlist.includes(property.id) 
+                  ? 'bg-red-500 text-white' 
+                  : 'bg-white text-gray-600 hover:bg-gray-100'
+              }`}
+              title="Add to wishlist"
+            >
+              <Heart className="w-3 sm:w-3.5 md:w-4 h-3 sm:h-3.5 md:h-4" fill={wishlist.includes(property.id) ? 'currentColor' : 'none'} />
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <div className="p-2 sm:p-4 md:p-6 flex-1 flex flex-col justify-between min-w-0">
+        <div>
+          <div className='flex justify-between gap-2 sm:gap-4 mb-2 sm:mb-3 md:mb-4'>
+            <h3 className="text-sm sm:text-base md:text-lg font-semibold text-gray-800 truncate">
+              {property.title}
+            </h3>
+            <div className="text-right flex-shrink-0">
+              <div className="text-sm sm:text-lg md:text-2xl font-bold text-blue-600">
+                {getPriceDisplay(property)}
+              </div>
+              <div className="text-xs sm:text-sm text-gray-500">For Sale</div>
+            </div>
+          </div>
+          
+          <div className="flex items-center text-gray-600 mb-2 sm:mb-3 md:mb-4">
+            <MapPin className="w-3 sm:w-3.5 md:w-4 h-3 sm:h-3.5 md:h-4 mr-1 flex-shrink-0" />
+            <span className="text-xs sm:text-sm truncate">
+              {property.showAddress ? property.address : `${property.city}, ${property.state}`}
+            </span>
+          </div>
+          
+          <div className="flex items-center gap-2 sm:gap-4 md:gap-6 text-xs sm:text-sm text-gray-600 mb-2 sm:mb-3 md:mb-4">
+            <div className="flex items-center gap-1">
+              🛏️
+              <span className="hidden sm:inline">{property.bedroom} Beds</span>
+              <span className="sm:hidden">{property.bedroom}</span>
+            </div>
+            <div className="flex items-center gap-1">
+              🛁
+              <span className="hidden sm:inline">{property.bathroom} Baths</span>
+              <span className="sm:hidden">{property.bathroom}</span>
+            </div>
+            {property.totalArea && (
+              <div className="flex items-center gap-1">
+                📐
+                <span className="hidden md:inline">{property.totalArea} {property.totalAreaUnit}</span>
+                <span className="md:hidden">{property.totalArea}</span>
+              </div>
+            )}
+          </div>
+          
+          <p className="text-gray-600 text-xs sm:text-sm mb-2 sm:mb-3 md:mb-4 line-clamp-1 sm:line-clamp-2 md:line-clamp-3">
+            {property.description}
+          </p>
+        </div>
+        
+        <button 
+          onClick={() => navigate(`/property/${property.id}`)}
+          className="bg-blue-600 text-white py-1.5 sm:py-2 px-3 sm:px-6 rounded hover:bg-blue-700 transition-colors flex items-center justify-center gap-1 sm:gap-2 self-start text-xs sm:text-sm"
+        >
+          <Eye className="w-3 sm:w-4 h-3 sm:h-4" />
+          <span className="hidden sm:inline">View Details</span>
+          <span className="sm:hidden">View</span>
+        </button>
+      </div>
+    </div>
+    );
+  }
+
+  // Grid view (existing code)
+  return (
+     <div className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition-shadow duration-300">
     <div className="relative">
       <img 
         src={property.images?.[0] || 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop'} 
@@ -425,19 +557,28 @@ const toggleWishlist = async (propertyId) => {
           {property.propertyType}
         </span>
       </div>
-      <div className="absolute top-3 right-3">
- 
-<button
-  onClick={() => toggleWishlist(property.id)}
-  className={`p-2 rounded-full transition-colors ${
-    wishlist.includes(property.id) 
-      ? 'bg-red-500 text-white' 
-      : 'bg-white text-gray-600 hover:bg-gray-100'
-  }`}
->
-  <Heart className="w-4 h-4" fill={wishlist.includes(property.id) ? 'currentColor' : 'none'} />
-</button>
-      </div>
+    <div className="absolute top-3 right-3">
+  <div className="flex gap-2">
+    <button
+      onClick={() => shareProperty(property)}
+      className="p-2 rounded-full bg-white text-gray-600 hover:bg-gray-100 transition-colors"
+      title="Share property"
+    >
+      <Share2 className="w-4 h-4" />
+    </button>
+    <button
+      onClick={() => toggleWishlist(property.id)}
+      className={`p-2 rounded-full transition-colors ${
+        wishlist.includes(property.id) 
+          ? 'bg-red-500 text-white' 
+          : 'bg-white text-gray-600 hover:bg-gray-100'
+      }`}
+      title="Add to wishlist"
+    >
+      <Heart className="w-4 h-4" fill={wishlist.includes(property.id) ? 'currentColor' : 'none'} />
+    </button>
+  </div>
+</div>
     </div>
     
     <div className="p-4">
@@ -491,7 +632,8 @@ const toggleWishlist = async (propertyId) => {
 </button>
     </div>
   </div>
-);
+  );
+};
 
   const SelectField = ({ label, value, onChange, options, placeholder = 'Select type' }) => (
     <div className="space-y-2">
@@ -563,27 +705,41 @@ return (
             <Filter className="w-5 h-5" />
             Filters
           </h2>
-          <div className="flex items-center gap-4">
-            <button
-              onClick={clearFilters}
-              className="text-blue-600 text-sm hover:text-blue-700"
-            >
-              Clear Filters
-            </button>
-            <div className="flex items-center gap-2">
-              <span className="text-sm text-gray-600">Sort:</span>
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              >
-                <option value="newest">Newest</option>
-                <option value="price-low">Price ↑</option>
-                <option value="price-high">Price ↓</option>
-                <option value="bedrooms">Bedrooms</option>
-              </select>
-            </div>
-          </div>
+         <div className="flex items-center gap-4">
+  <button
+    onClick={clearFilters}
+    className="text-blue-600 text-sm hover:text-blue-700"
+  >
+    Clear Filters
+  </button>
+  <div className="flex items-center gap-2">
+    <span className="text-sm text-gray-600">Sort:</span>
+    <select
+      value={sortBy}
+      onChange={(e) => setSortBy(e.target.value)}
+      className="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+    >
+      <option value="newest">Newest</option>
+      <option value="price-low">Price ↑</option>
+      <option value="price-high">Price ↓</option>
+      <option value="bedrooms">Bedrooms</option>
+    </select>
+  </div>
+  <div className="flex items-center gap-2">
+    <button
+      onClick={() => setViewMode('grid')}
+      className={`p-2 rounded-lg ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+    >
+      <Grid className="w-4 h-4" />
+    </button>
+    <button
+      onClick={() => setViewMode('list')}
+      className={`p-2 rounded-lg ${viewMode === 'list' ? 'bg-blue-100 text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+    >
+      <List className="w-4 h-4" />
+    </button>
+  </div>
+</div>
         </div>
 
         {/* Filter Grid - Horizontal Layout */}
@@ -667,11 +823,14 @@ return (
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6">
-            {currentProperties.map((property) => (
-  <PropertyCard key={property.id} property={property} />
-))}
-          </div>
+         <div className={viewMode === 'grid' 
+  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 lg:gap-6"
+  : "space-y-4"
+}>
+  {currentProperties.map((property) => (
+    <PropertyCard key={property.id} property={property} viewMode={viewMode} />
+  ))}
+</div>
         )}
 
         {/* Load More Button */}
