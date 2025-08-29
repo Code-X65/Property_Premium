@@ -19,6 +19,15 @@ import AgentsList from './Paages/AgentListing'
 import PropertySearch from './Paages/PropertySearch'
 import PropertiesForRent from './Paages/PropertyForRent'
 import PropertiesForShortlet from './Paages/PropertyForShortlet'
+import HousesForSale from './DropdownNavigation/HousesForSale'
+import ApartmentForSale from './DropdownNavigation/ApartmentForSale'
+import CommercialProperties from './DropdownNavigation/CommercialProperties'
+import LandForSale from './DropdownNavigation/LandForSale'
+import NewDevelopment from './DropdownNavigation/NewDevelopment'
+import HousesForRent from './DropdownNavigation/HousesForRent'
+import ApartmentForRent from './DropdownNavigation/ApartmenForRent'
+import OfficeSpace from './DropdownNavigation/OfficespaceForRent'
+import FurnishedForRent from './DropdownNavigation/FurnishedForRent'
 
 // Loading spinner component
 const LoadingSpinner = () => (
@@ -101,9 +110,22 @@ const App = () => {
         <Routes>
           {/* Public routes */}
           <Route path='/' element={<Homepage />} />
-          <Route path='/property_for_sale' element={<PropertiesForSale />} />
-          <Route path='/property_for_rent' element={<PropertiesForRent />} />
           <Route path='/property_for_shortlet' element={<PropertiesForShortlet />} />
+          {/* Properties for Sale */}
+          <Route path='/property_for_sale' element={<PropertiesForSale />} />
+          <Route path='/Houses_for_Sale' element={<HousesForSale />} />
+          <Route path='/Apartment_for_Sale' element={<ApartmentForSale />} />
+          <Route path='/CommercialProperties' element={<CommercialProperties />} />
+          <Route path='/Land_for_Sale' element={<LandForSale />} />
+          <Route path='/NewDevelopmnt' element={<NewDevelopment />} />
+          {/* Properties for Rent */}
+          <Route path='/property_for_rent' element={<PropertiesForRent />} />
+          <Route path='/Houses_for_rent' element={<HousesForRent />} />
+          <Route path='/Apartment_for_rent' element={<ApartmentForRent />} />
+          <Route path='/Office_Space' element={<OfficeSpace />} />
+          <Route path='/Furnished_House_&_Apartment' element={<FurnishedForRent />} />
+          
+
           <Route path='/newsletter_table' element={<NewsletterSubscribersTable />} />
           <Route path='/Agents' element={<AgentsList />} />
           <Route path="/property/:id" element={<PropertyDetails />} />

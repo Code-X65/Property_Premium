@@ -27,12 +27,11 @@ const searchRef = useRef(null);
   const service_1 = [
     { name: "Buy", a: "/property_for_sale" },
     { name: "Rent", a: "/property_for_rent" },
-    { name: "Shortlet", a: "/property_for_shortlet" },
-    { name: "Estate Agent", a: "/Agents" },
-
-  ];
-
+    { name: "Professionals", a: "/Agents" },
+    
+  ]; 
   const service_2 = [
+    { name: "Shortlet", a: "/property_for_shortlet" },
     { name: "Services", a: "/services" },
     { name: "About", a: "/about" },
     { name: "Blog", a: "/blogPage" }
@@ -40,25 +39,26 @@ const searchRef = useRef(null);
 
   const service_1_dropdown = {
   "Buy": [
-    { name: "Houses for Sale", href: "/houses-for-sale", icon: "🏠" },
-    { name: "Apartments for Sale", href: "/apartments-for-sale", icon: "🏢" },
-    { name: "Commercial Properties", href: "/commercial-sale", icon: "🏪" },
-    { name: "Land for Sale", href: "/land-for-sale", icon: "🏞️" },
-    { name: "New Developments", href: "/new-developments", icon: "🏗️" }
+    { name: "Houses for Sale", href: "/Houses_for_Sale", icon: "🏠" },
+    { name: "Apartments for Sale", href: "/Apartment_for_Sale", icon: "🏢" },
+    { name: "Commercial Properties", href: "/CommercialProperties", icon: "🏪" },
+    { name: "Land for Sale", href: "/Land_for_Sale", icon: "🏞️" },
+    { name: "New Developments", href: "/NewDevelopmnt", icon: "🏗️" }
   ],
   "Rent": [
-    { name: "Houses for Rent", href: "/houses-for-rent", icon: "🏡" },
-    { name: "Apartments for Rent", href: "/apartments-for-rent", icon: "🏢" },
-    { name: "Office Spaces", href: "/office-rent", icon: "🏢" },
+    { name: "Houses for Rent", href: "/Houses_for_rent", icon: "🏡" },
+    { name: "Apartments for Rent", href: "/Apartment_for_rent", icon: "🏢" },
+    { name: "Office Spaces", href: "/Office_Space", icon: "🏢" },
     { name: "Student Housing", href: "/student-housing", icon: "🎓" },
-    { name: "Furnished Rentals", href: "/furnished-rentals", icon: "🛏️" }
+    { name: "Furnished Rentals", href: "/Furnished_House_&_Apartment", icon: "🛏️" }
   ],
-  "Estate Agent": [
-    { name: "Find an Agent", href: "/find-agent", icon: "👨‍💼" },
-    { name: "Agent Services", href: "/agent-services", icon: "🤝" },
-    { name: "Property Valuation", href: "/property-valuation", icon: "💰" },
-    { name: "Market Reports", href: "/market-reports", icon: "📊" },
-    { name: "Become an Agent", href: "/become-agent", icon: "💼" }
+   "Professionals": [
+    { name: "Real Estate Agent", href: "/real-estate-agent", icon: "👨‍💼" },
+    { name: "Real Estate Organization", href: "/real-estate-organization", icon: "🏢" },
+    { name: "Estate Surveying Firm", href: "/estate-surverying-firm", icon: "📏" },
+    { name: "Developer", href: "/developer", icon: "🏗️" },
+    { name: "Property Manager", href: "/property-manager", icon: "🔑" },
+    { name: "Broker", href: "/broker", icon: "🤝" }
   ]
 };
 
@@ -467,7 +467,7 @@ useEffect(() => {
         className="relative text-sm font-medium text-gray-700 hover:text-blue-600 transition-all duration-300 group py-2 flex items-center"
       >
         <span className="relative z-10">{item.name}</span>
-        <ChevronDown className={`ml-1 h-3 w-3 transition-transform duration-200 ${hoveredService === item.name ? 'rotate-180' : ''}`} />
+       
         <div className="absolute inset-0 bg-blue-50 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-200 origin-center"></div>
         <div className="absolute bottom-0 left-0 w-0 h-0.5 bg-blue-600 group-hover:w-full transition-all duration-300"></div>
       </Link>

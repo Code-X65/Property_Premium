@@ -37,6 +37,8 @@ const CreateListing = ({ propertyId = null, existingProperty = null }) => {
         }
     };
 
+
+
     const checkUserProfileValidation = async (userId) => {
     try {
         const db = getFirestore();
@@ -102,6 +104,17 @@ const CreateListing = ({ propertyId = null, existingProperty = null }) => {
 
 const [availableStates, setAvailableStates] = useState(Object.keys(locationData['Nigeria'] || {}));
 const [availableCities, setAvailableCities] = useState(locationData['Nigeria']?.['Lagos'] || []);
+    const propertyTypesByAdvertisingFor = {
+  'Sale': ['House', 'Apartment', 'Duplex', 'Bungalow', 'Penthouse', 'Commercial', 'Land', 'Warehouse', 'Office Space'],
+  'Rent': ['House', 'Apartment', 'Duplex', 'Bungalow', 'Studio', 'Penthouse', 'Office Space'],
+  'Lease': ['Commercial', 'Office Space', 'Warehouse', 'Land'],
+  'Shortlet': ['Apartment', 'House', 'Studio', 'Penthouse']
+};
+const getAvailablePropertyTypes = (advertisingFor) => {
+  return advertisingFor ? propertyTypesByAdvertisingFor[advertisingFor] || [] : [];
+};
+
+const availablePropertyTypes = getAvailablePropertyTypes(formData.advertisingFor);
 
 useEffect(() => {
     if (formData.country && locationData[formData.country]) {
@@ -257,6 +270,14 @@ const setupEditMode = (property) => {
                 images: uploadedImages.map(img => img.preview || img.url)
             }));
         }
+       
+        if (field === 'advertisingFor') {
+  const newPropertyTypes = getAvailablePropertyTypes(value);
+  if (formData.propertyType && !newPropertyTypes.includes(formData.propertyType)) {
+    setFormData(prev => ({ ...prev, [field]: value, propertyType: '' }));
+    return;
+  }
+}
     };
 
     const handleListChange = (field, index, value) => {
@@ -1081,6 +1102,7 @@ return (
  availableStates={availableStates}
 availableCities={availableCities}
 getPriceDisplayText={getPriceDisplayText}
+availablePropertyTypes={availablePropertyTypes}
                     />
                 )}
 

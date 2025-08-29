@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 // SelectField Component
-const SelectField = ({ label, value, onChange, options, required, className = "", disabled = false, placeholder }) => {
+const SelectField = ({ label, value, onChange, options, required, className = "", disabled = false, placeholder, availablePropertyTypes, }) => {
   return (
     <div className={`space-y-2 ${className}`}>
       <label className="block text-sm font-medium text-gray-700">
