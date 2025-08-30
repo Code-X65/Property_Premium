@@ -32,7 +32,7 @@ const searchRef = useRef(null);
   ]; 
   const service_2 = [
     { name: "Shortlet", a: "/property_for_shortlet" },
-    { name: "Services", a: "/services" },
+    { name: "Services", a: "/Services" },
     { name: "About", a: "/about" },
     { name: "Blog", a: "/blogPage" }
   ];

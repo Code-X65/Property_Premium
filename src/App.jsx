@@ -28,6 +28,7 @@ import HousesForRent from './DropdownNavigation/HousesForRent'
 import ApartmentForRent from './DropdownNavigation/ApartmenForRent'
 import OfficeSpace from './DropdownNavigation/OfficespaceForRent'
 import FurnishedForRent from './DropdownNavigation/FurnishedForRent'
+import ServicesPage from './Paages/ServicePage'
 
 // Loading spinner component
 const LoadingSpinner = () => (
@@ -111,6 +112,7 @@ const App = () => {
           {/* Public routes */}
           <Route path='/' element={<Homepage />} />
           <Route path='/property_for_shortlet' element={<PropertiesForShortlet />} />
+          <Route path='/Services' element={<ServicesPage />} />
           {/* Properties for Sale */}
           <Route path='/property_for_sale' element={<PropertiesForSale />} />
           <Route path='/Houses_for_Sale' element={<HousesForSale />} />
