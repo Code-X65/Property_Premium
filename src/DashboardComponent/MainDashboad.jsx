@@ -1,30 +1,108 @@
-import React from 'react'
+import {useState, useEffect, React} from 'react'
 import { 
-    Building2, 
     Plus, 
     CreditCard, 
-    Globe, 
-    BarChart3, 
-    User, 
-    FileText, 
-    HelpCircle,
-    Bell,
     Mail,
-    Settings,
-    LogOut,
-    X,
     Phone,
     MessageCircle,
     Save,
-    ChevronRight,
-    Menu,
-    Home,
-    List,
     User2,
+    MapPin,
+    Calendar,
+    Bed,
+    Bath,
+    Square,
+    Loader2,
+    Eye
   } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { getCurrentUser, subscribeToAuthChanges } from '../Firebase Auth/Firebase';
+import { getUserProperties } from '../Firebase Auth/Firestore';
 
 const MainDashboad = ({user}) => {
+    const [recentListings, setRecentListings] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+
+  // Add useEffect to fetch listings
+  useEffect(() => {
+    if (user) {
+      fetchRecentListings();
+    }
+  }, [user]);
+ const fetchRecentListings = async () => {
+    if (!user) return;
+
+    setLoading(true);
+    setError('');
+
+    try {
+      const userProperties = await getUserProperties();
+      const propertiesArray = Array.isArray(userProperties) ? userProperties : [];
+      
+      const sortedProperties = propertiesArray
+        .sort((a, b) => {
+          const dateA = a.createdAt?.toDate?.() || new Date(a.createdAt) || new Date(0);
+          const dateB = b.createdAt?.toDate?.() || new Date(b.createdAt) || new Date(0);
+          return dateB - dateA;
+        })
+        .slice(0, 4);
+
+      setRecentListings(sortedProperties);
+    } catch (error) {
+      console.error('Error fetching recent listings:', error);
+      setError('Failed to load recent listings');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const formatPrice = (price, currency, pricePer) => {
+    try {
+      if (!price || isNaN(price)) {
+        return 'Price not available';
+      }
+
+      const formatter = new Intl.NumberFormat('en-US');
+      const currencySymbol = currency === 'Nigeria Naira' ? '₦' : '$';
+      const formattedPrice = `${currencySymbol}${formatter.format(Number(price))}`;
+      
+      return pricePer ? `${formattedPrice}${pricePer.toLowerCase() === 'not applicable'? '' : '/' }${pricePer.toLowerCase() === 'not applicable'? '' : pricePer.toLowerCase() }` : formattedPrice;
+    } catch (error) {
+      console.error('Error formatting price:', error);
+      return 'Price error';
+    }
+  };
+
+  const formatDate = (date) => {
+    try {
+      if (!date) return 'N/A';
+      
+      let dateObj;
+      if (date && typeof date.toDate === 'function') {
+        dateObj = date.toDate();
+      } else if (date instanceof Date) {
+        dateObj = date;
+      } else if (typeof date === 'string' || typeof date === 'number') {
+        dateObj = new Date(date);
+      } else {
+        return 'Invalid date';
+      }
+      
+      if (isNaN(dateObj.getTime())) {
+        return 'Invalid date';
+      }
+      
+      return dateObj.toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+      });
+    } catch (error) {
+      console.error('Error formatting date:', error);
+      return 'Date error';
+    }
+  };
   return (
     <>
     <div>
@@ -49,7 +127,7 @@ const MainDashboad = ({user}) => {
         <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
           <User2 className="w-6 h-6 text-green-600" />
         </div>
-        <h4 className="font-medium text-gray-800">Upadet Profile</h4>
+        <h4 className="font-medium text-gray-800">Upadate Profile</h4>
       </div>
       </Link>
 
@@ -57,25 +135,127 @@ const MainDashboad = ({user}) => {
         <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
           <CreditCard className="w-6 h-6 text-green-600" />
         </div>
-        <h4 className="font-medium text-gray-800">Manage Subcription</h4>
+        <h4 className="font-medium text-gray-800">Manage Subscription</h4>
       </div>
     </div>
 
-    {/* Recent Listings */}
-    <div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
-      <div className="flex items-center justify-between mb-4">
-        <h4 className="text-lg font-medium text-gray-800">Your Recent Listings</h4>
-        <button className="text-blue-600 text-sm hover:underline">See more...</button>
-      </div>
-      <div className="text-center py-8">
-        <p className="text-gray-600">
-          You do not have any recent listing. 
+  {/* Recent Listings */}
+<div className="bg-white rounded-lg border border-gray-200 p-6 mb-8">
+  <div className="flex items-center justify-between mb-4">
+    <h4 className="text-lg font-medium text-gray-800">Your Recent Listings</h4>
+    <Link to='/dashboard/my-listings'>
+      <button className="text-blue-600 text-sm hover:underline">See all...</button>
+    </Link>
+  </div>
+  
+  {loading ? (
+    <div className="flex items-center justify-center py-8">
+      <Loader2 className="w-6 h-6 animate-spin text-blue-600" />
+      <span className="ml-2 text-gray-600">Loading recent listings...</span>
+    </div>
+  ) : error ? (
+    <div className="text-center py-8">
+      <p className="text-red-600 mb-2">{error}</p>
+      <button 
+        onClick={fetchRecentListings}
+        className="text-blue-600 hover:underline text-sm"
+      >
+        Try again
+      </button>
+    </div>
+  ) : recentListings.length === 0 ? (
+    <div className="text-center py-8">
+      <p className="text-gray-600">
+        You do not have any recent listing. 
+        <Link to='/post_a_listing'>
           <button className="text-blue-600 hover:underline ml-1">
             Click here to Post a Listing
           </button>
-        </p>
-      </div>
+        </Link>
+      </p>
     </div>
+  ) : (
+    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {recentListings.map((property) => (
+        <div key={property.id} className="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
+          {/* Property Image */}
+          <div className="relative h-32 bg-gray-200">
+            {property.images && Array.isArray(property.images) && property.images.length > 0 ? (
+              <img
+                src={property.images[0]}
+                alt={property.title || 'Property image'}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.target.onerror = null;
+                  e.target.src = 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjI0IiBoZWlnaHQ9IjI0IiBmaWxsPSIjRjNGNEY2Ii8+CjxwYXRoIGQ9Ik0xMiAxNkw4IDEySDEwVjhIMTRWMTJIMTZMMTIgMTZaIiBmaWxsPSIjOUI5QkExIi8+Cjwvc3ZnPgo=';
+                }}
+              />
+            ) : (
+              <div className="w-full h-full flex items-center justify-center bg-gray-100">
+                <Square className="w-8 h-8 text-gray-400" />
+              </div>
+            )}
+          </div>
+
+          {/* Property Details */}
+          <div className="p-3">
+            <div className="text-sm font-semibold text-blue-600 mb-1">
+              {formatPrice(property.price, property.currency, property.pricePer)}
+            </div>
+            
+            <h5 className="text-sm font-medium text-gray-800 mb-1 line-clamp-1">
+              {property.title || 'Untitled Property'}
+            </h5>
+            
+            <div className="flex items-center text-gray-600 mb-2">
+              <MapPin className="w-3 h-3 mr-1 flex-shrink-0" />
+              <span className="text-xs truncate">
+                {property.location || 
+                (property.city && property.state ? `${property.city}, ${property.state}` : 'Location not specified')}
+              </span>
+            </div>
+
+            {/* Property Features */}
+            <div className="flex items-center gap-3 text-xs text-gray-600 mb-2">
+              {property.bedroom && (
+                <div className="flex items-center gap-1">
+                  <Bed className="w-3 h-3" />
+                  <span>{property.bedroom}</span>
+                </div>
+              )}
+              {property.bathroom && (
+                <div className="flex items-center gap-1">
+                  <Bath className="w-3 h-3" />
+                  <span>{property.bathroom}</span>
+                </div>
+              )}
+              {property.totalArea && (
+                <div className="flex items-center gap-1">
+                  <Square className="w-3 h-3" />
+                  <span>{property.totalArea} {property.totalAreaUnit || 'sqft'}</span>
+                </div>
+              )}
+            </div>
+
+            {/* Created Date */}
+            <div className="flex items-center justify-between">
+              <div className="flex items-center text-xs text-gray-500">
+                <Calendar className="w-3 h-3 mr-1" />
+                <span>{formatDate(property.createdAt)}</span>
+              </div>
+              
+              <Link to={`/dashboard/my-listings`}>
+                <button className="text-blue-600 hover:text-blue-700">
+                  <Eye className="w-4 h-4" />
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  )}
+</div>
 
     {/* Latest from Service Areas */}
     <div className="hidden md:block bg-white rounded-lg border border-gray-200 p-6 ">
